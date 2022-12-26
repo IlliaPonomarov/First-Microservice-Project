@@ -2,10 +2,11 @@ package com.micro.account.models;
 
 import java.util.Date;
 import java.util.Objects;
-
-import com.example.demo.util.enums.AccountType;
+import com.micro.account.util.enums.AccountType;
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "account")
@@ -13,7 +14,8 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "account_id")
+    private Long accountId;
     @Column(name = "account_type")
     @Enumerated(EnumType.ORDINAL)
     private AccountType accountType;

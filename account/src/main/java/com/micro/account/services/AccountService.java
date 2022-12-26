@@ -1,8 +1,10 @@
 package com.micro.account.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import com.micro.account.models.Account;
+import com.micro.account.models.Customer;
 import com.micro.account.repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,27 @@ public class AccountService {
 
     public Optional<Account> findById(Long id) {
         return accountRepo.findById(id);
+    }
+
+    public Optional<Account> findByCustomerId(long id) {
+
+        try {
+
+        }catch (NullPointerException exc) {
+            return  Optional.empty();
+        }
+        return Optional.of(accountRepo.findByCustomerId(id));
+    }
+
+    @Transactional
+    public void save(Account account) {
+        account.setCreatedAt(new Date());
+        accountRepo.save(account);
+    }
+
+    @Transactional
+    public void update(Account account) {
+        accountRepo.save(account);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.util.enums;
+package com.micro.account.util.enums;
 
 public enum AccountType {
     CHECKING, SAVINGS, LOAN, CREDITCARD
