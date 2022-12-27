@@ -12,6 +12,7 @@
     <artifactId>cards</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cards</name>
+    <packaging>jar</packaging>
     <description>cards</description>
     <properties>
         <java.version>17</java.version>
@@ -47,6 +48,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                          <name>micro/${project.artifactId}</name>
+                    </image>
+                </configuration>
             </plugin>
         </plugins>
     </build>
