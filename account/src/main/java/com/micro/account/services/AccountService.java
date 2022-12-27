@@ -30,7 +30,7 @@ public class AccountService {
         return accountRepo.findById(id);
     }
 
-    public Optional<Account> findByCustomerId(long id) {
+    public Optional<Account> findByCustomerId(int id) {
 
         try {
 
@@ -42,7 +42,7 @@ public class AccountService {
 
     @Transactional
     public void save(Account account) {
-        account.setCreatedAt(new Date());
+        account.setCreateDt(new Date());
         accountRepo.save(account);
     }
 

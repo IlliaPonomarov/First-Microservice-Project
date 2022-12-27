@@ -49,7 +49,7 @@ public class AccountController {
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<String> findByCustomerId(@PathVariable Long id) {
+    public ResponseEntity<String> findByCustomerId(@PathVariable int id) {
 
         Optional<Account> account = accountService.findByCustomerId(id);
 

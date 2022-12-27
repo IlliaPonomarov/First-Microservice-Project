@@ -17,13 +17,21 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: cards
+
+  db-accounts:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: account
       
   loans-app:
     build: ./loans
     environment: [SPRING_DATASOURCE_URL=jdbc:postgresql://db-loans:5432/loans, SPRING_DATASOURCE_USERNAME=postgres, SPRING_DATASOURCE_PASSWORD=root]
     ports: ["9821:9821"]
+    container_name: micro/loans-app
     mem_limit: 700m
-    networks: [micro-network]
     depends_on: [db-loans]
 
   cards-app:
@@ -31,5 +39,13 @@ services:
     environment: [SPRING_DATASOURCE_URL=jdbc:postgresql://db-cards:5432/cards, SPRING_DATASOURCE_USERNAME=postgres, SPRING_DATASOURCE_PASSWORD=root]
     ports: ["9822:9822"]
     mem_limit: 700m
-    networks: [micro-network]
+    container_name: micro/cards-app
     depends_on: [db-cards]
+
+  account-app:
+    build: ./account
+    environment: [SPRING_DATASOURCE_URL=jdbc:postgresql://db-accounts:5432/account, SPRING_DATASOURCE_USERNAME=postgres, SPRING_DATASOURCE_PASSWORD=root]
+    ports: ["9820:9820"]
+    container_name: micro/account-app
+    mem_limit: 700m
+    depends_on: [db-accounts]

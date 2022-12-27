@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import javax.annotation.processing.Generated;
 import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -12,31 +13,24 @@ import java.util.Objects;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
-    private Long customerId;
-    @Column(name = "name")
+    private int customerId;
     private String name;
-
-    @Column(name = "email")
     private String email;
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+    @Column(name = "create_dt")
+    @Temporal(TemporalType.DATE)
+    private Date createDt;
 
-    @Column(name = "phone")
-    private String phone;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    public Customer() {
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public Customer(String name, String email, String phone) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
-
 
     public String getName() {
         return name;
@@ -54,41 +48,43 @@ public class Customer {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public Account getAccount() {
-        return account;
+    public Date getCreateDt() {
+        return createDt;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
     }
 
     @Override
-    public boolean equals(Object object) {
-
-        if(this == object) return true;
-
-        if(object == null || !(object instanceof Customer)) return false;
-
-        Customer customer = (Customer) object;
-
-        return name.equals(customer.name) &&
-                email.equals(customer.email) &&
-                account.equals(customer.account) &&
-                phone.equals(customer.phone);
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return customerId == customer.customerId && Objects.equals(name, customer.name) && Objects.equals(email, customer.email) && Objects.equals(mobileNumber, customer.mobileNumber) && Objects.equals(createDt, customer.createDt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, phone, account);
+        return Objects.hash(customerId, name, email, mobileNumber, createDt);
     }
-    
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", createDt=" + createDt +
+                '}';
+    }
 }

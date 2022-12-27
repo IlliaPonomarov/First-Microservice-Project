@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface AccountRepo extends JpaRepository<Account, Long> {
 
+    Account findByCustomerId(int customerId);
+
 }

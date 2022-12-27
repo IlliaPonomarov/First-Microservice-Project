@@ -9,42 +9,42 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 public class Account {
 
+    @Column(name = "customer_id")
+    private int customerId;
+    @Column(name="account_number")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
-    private Long accountId;
-    @Column(name = "account_type")
-    @Enumerated(EnumType.ORDINAL)
-    private AccountType accountType;
-
+    private long accountNumber;
+    @Column(name="account_type")
+    private String accountType;
     @Column(name = "branch_address")
     private String branchAddress;
+    @Column(name = "create_dt")
+    private Date createDt;
 
-    @OneToOne(mappedBy = "account")
-    private Customer customerId;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.DATE)
-    private Date createdAt;
-
-    public Account() {
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public Account(AccountType accountType, String branchAddress, Customer customerId, Date createdAt) {
-        this.accountType = accountType;
-        this.branchAddress = branchAddress;
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
-        this.createdAt = createdAt;
     }
 
-    public AccountType getAccountType() {
+    public long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(AccountType accountType) {
+    public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
 
@@ -56,30 +56,35 @@ public class Account {
         this.branchAddress = branchAddress;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getCreateDt() {
+        return createDt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Account)) return false;
-
+        if (!(o instanceof Account)) return false;
         Account account = (Account) o;
-
-        return  this.accountType.equals(account.accountType) &&
-                this.branchAddress.equals(account.branchAddress) && 
-                this.customerId.equals(account.customerId) &&
-                this.createdAt.equals(account.createdAt);
+        return customerId == account.customerId && accountNumber == account.accountNumber && Objects.equals(accountType, account.accountType) && Objects.equals(branchAddress, account.branchAddress) && Objects.equals(createDt, account.createDt);
     }
-
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountType, branchAddress, customerId, createdAt);
+        return Objects.hash(customerId, accountNumber, accountType, branchAddress, createDt);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "customerId=" + customerId +
+                ", accountNumber=" + accountNumber +
+                ", accountType='" + accountType + '\'' +
+                ", branchAddress='" + branchAddress + '\'' +
+                ", createDt=" + createDt +
+                '}';
     }
 }
