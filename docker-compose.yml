@@ -5,27 +5,37 @@ services:
   db-loans:
     image: postgres:latest
     restart: always
+    container_name: db-loans
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: loans
+    volumes: [./data:/var/lib/postgresql/data]
 
   db-cards:
     image: postgres:latest
     restart: always
+    container_name: db-cards
+    environment:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: cards
+    
+    volumes: [./data:/var/lib/postgresql/data]
 
   db-accounts:
     image: postgres:latest
     restart: always
+    container_name: db-accounts
+    environment:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
       POSTGRES_DB: account
       
+    volumes: [./data:/var/lib/postgresql/data]
+
   loans-app:
     build: ./loans
     environment: [SPRING_DATASOURCE_URL=jdbc:postgresql://db-loans:5432/loans, SPRING_DATASOURCE_USERNAME=postgres, SPRING_DATASOURCE_PASSWORD=root]
@@ -33,6 +43,7 @@ services:
     container_name: loans-app
     mem_limit: 700m
     depends_on: [db-loans]
+
 
   cards-app:
     build: ./cards
